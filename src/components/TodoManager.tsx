@@ -59,6 +59,14 @@ const TodoManager: React.FC = () => {
     setTodos(updatedTodos);
   };
 
+  const handleDeleteCompleted = () => {
+    setTodos(todos.filter(todo => !todo.completed));
+  };
+
+  const countCompletedTasks = () => {
+    return todos.filter(todo => todo.completed).length;
+  };
+
   const filteredTodos = todos.filter(todo => {
     if (filterOption === 'all') {
       return true;
@@ -84,7 +92,9 @@ const TodoManager: React.FC = () => {
         <button onClick={() => handleFilterChange('completed')}>Completed Tasks</button>
         <button onClick={() => handleFilterChange('incomplete')}>Incomplete Tasks</button>
         <button onClick={handleMarkAllComplete}>Mark All Complete</button>
+        <button onClick={handleDeleteCompleted}>Delete Completed</button>
       </div>
+      <p>{countCompletedTasks()} of {todos.length} tasks completed</p>
       <ul>
         {filteredTodos.map(todo => (
           <li key={todo.id}>
