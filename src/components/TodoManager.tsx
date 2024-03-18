@@ -87,13 +87,13 @@ const TodoManager: React.FC = () => {
         onChange={handleInputChange}
       />
       <button onClick={handleAddTodo}>Add Task</button>
-      <div>
-        <button onClick={() => handleFilterChange('all')}>All Tasks</button>
-        <button onClick={() => handleFilterChange('completed')}>Completed Tasks</button>
-        <button onClick={() => handleFilterChange('incomplete')}>Incomplete Tasks</button>
-        <button onClick={handleMarkAllComplete}>Mark All Complete</button>
-        <button onClick={handleDeleteCompleted}>Delete Completed</button>
-      </div>
+      <select value={filterOption} onChange={e => handleFilterChange(e.target.value)}>
+        <option value="all">All Tasks</option>
+        <option value="completed">Completed Tasks</option>
+        <option value="incomplete">Incomplete Tasks</option>
+      </select>
+      <button onClick={handleMarkAllComplete}>Mark All Complete</button>
+      <button onClick={handleDeleteCompleted}>Delete Completed</button>
       <p>{countCompletedTasks()} of {todos.length} tasks completed</p>
       <ul>
         {filteredTodos.map(todo => (
