@@ -9,6 +9,7 @@ interface Todo {
 const TodoManager: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputText, setInputText] = useState<string>('');
+  const [filterOption, setFilterOption] = useState<string>('all');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -46,6 +47,28 @@ const TodoManager: React.FC = () => {
     );
   };
 
+  const handleFilterChange = (option: string) => {
+    setFilterOption(option);
+  };
+
+  const handleMarkAllComplete = () => {
+    const updatedTodos = todos.map(todo => ({
+      ...todo,
+      completed: true,
+    }));
+    setTodos(updatedTodos);
+  };
+
+  const filteredTodos = todos.filter(todo => {
+    if (filterOption === 'all') {
+      return true;
+    } else if (filterOption === 'completed') {
+      return todo.completed;
+    } else {
+      return !todo.completed;
+    }
+  });
+
   return (
     <div>
       <h1>To-Do List</h1>
@@ -56,8 +79,14 @@ const TodoManager: React.FC = () => {
         onChange={handleInputChange}
       />
       <button onClick={handleAddTodo}>Add Task</button>
+      <div>
+        <button onClick={() => handleFilterChange('all')}>All Tasks</button>
+        <button onClick={() => handleFilterChange('completed')}>Completed Tasks</button>
+        <button onClick={() => handleFilterChange('incomplete')}>Incomplete Tasks</button>
+        <button onClick={handleMarkAllComplete}>Mark All Complete</button>
+      </div>
       <ul>
-        {todos.map(todo => (
+        {filteredTodos.map(todo => (
           <li key={todo.id}>
             <input
               type="checkbox"
