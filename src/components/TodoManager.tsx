@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface Todo {
-  id: number;
+  id: string;
   text: string;
   completed: boolean;
 }
@@ -15,10 +17,11 @@ const TodoManager: React.FC = () => {
     setInputText(e.target.value);
   };
 
+
   const handleAddTodo = () => {
     if (inputText.trim() !== '') {
       const newTodo: Todo = {
-        id: todos.length + 1,
+        id: uuidv4(),
         text: inputText,
         completed: false,
       };
@@ -27,11 +30,11 @@ const TodoManager: React.FC = () => {
     }
   };
 
-  const handleDeleteTodo = (id: number) => {
+  const handleDeleteTodo = (id: string) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  const handleToggleComplete = (id: number) => {
+  const handleToggleComplete = (id: string) => {
     setTodos(
       todos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -39,7 +42,7 @@ const TodoManager: React.FC = () => {
     );
   };
 
-  const handleEditTodo = (id: number, newText: string) => {
+  const handleEditTodo = (id: string, newText: string) => {
     setTodos(
       todos.map(todo =>
         todo.id === id ? { ...todo, text: newText } : todo
