@@ -1,79 +1,86 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-
 interface Todo {
   id: string;
   text: string;
   completed: boolean;
 }
 
+interface State {
+  todos: Todo[];
+  inputText: string;
+  filterOption: string;
+}
+
 const TodoManager: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [inputText, setInputText] = useState<string>('');
-  const [filterOption, setFilterOption] = useState<string>('all');
+  const [state, setState] = useState<State>({
+    todos: [],
+    inputText: '',
+    filterOption: 'all',
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value);
+    setState({ ...state, inputText: e.target.value });
   };
 
-
   const handleAddTodo = () => {
-    if (inputText.trim() !== '') {
+    if (state.inputText.trim() !== '') {
       const newTodo: Todo = {
         id: uuidv4(),
-        text: inputText,
+        text: state.inputText,
         completed: false,
       };
-      setTodos([...todos, newTodo]);
-      setInputText('');
+      setState({ ...state, todos: [...state.todos, newTodo], inputText: '' });
     }
   };
 
   const handleDeleteTodo = (id: string) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setState({ ...state, todos: state.todos.filter(todo => todo.id !== id) });
   };
 
   const handleToggleComplete = (id: string) => {
-    setTodos(
-      todos.map(todo =>
+    setState({
+      ...state,
+      todos: state.todos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+      ),
+    });
   };
 
   const handleEditTodo = (id: string, newText: string) => {
-    setTodos(
-      todos.map(todo =>
+    setState({
+      ...state,
+      todos: state.todos.map(todo =>
         todo.id === id ? { ...todo, text: newText } : todo
-      )
-    );
+      ),
+    });
   };
 
   const handleFilterChange = (option: string) => {
-    setFilterOption(option);
+    setState({ ...state, filterOption: option });
   };
 
   const handleMarkAllComplete = () => {
-    const updatedTodos = todos.map(todo => ({
+    const updatedTodos = state.todos.map(todo => ({
       ...todo,
       completed: true,
     }));
-    setTodos(updatedTodos);
+    setState({ ...state, todos: updatedTodos });
   };
 
   const handleDeleteCompleted = () => {
-    setTodos(todos.filter(todo => !todo.completed));
+    setState({ ...state, todos: state.todos.filter(todo => !todo.completed) });
   };
 
   const countCompletedTasks = () => {
-    return todos.filter(todo => todo.completed).length;
+    return state.todos.filter(todo => todo.completed).length;
   };
 
-  const filteredTodos = todos.filter(todo => {
-    if (filterOption === 'all') {
+  const filteredTodos = state.todos.filter(todo => {
+    if (state.filterOption === 'all') {
       return true;
-    } else if (filterOption === 'completed') {
+    } else if (state.filterOption === 'completed') {
       return todo.completed;
     } else {
       return !todo.completed;
@@ -86,18 +93,18 @@ const TodoManager: React.FC = () => {
       <input
         type="text"
         placeholder="Enter a task"
-        value={inputText}
+        value={state.inputText}
         onChange={handleInputChange}
       />
       <button onClick={handleAddTodo}>Add Task</button>
-      <select value={filterOption} onChange={e => handleFilterChange(e.target.value)}>
+      <select value={state.filterOption} onChange={e => handleFilterChange(e.target.value)}>
         <option value="all">All Tasks</option>
         <option value="completed">Completed Tasks</option>
         <option value="incomplete">Incomplete Tasks</option>
       </select>
       <button onClick={handleMarkAllComplete}>Mark All Complete</button>
       <button onClick={handleDeleteCompleted}>Delete Completed</button>
-      <p>{countCompletedTasks()} of {todos.length} tasks completed</p>
+      <p>{countCompletedTasks()} of {state.todos.length} tasks completed</p>
       <ul>
         {filteredTodos.map(todo => (
           <li key={todo.id}>
