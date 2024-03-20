@@ -110,15 +110,23 @@ const useViewModel = () => {
     }
   };
   
-
-  const handleToggleAllComplete = () => {
-    const updatedTodos = state.todos.map((todo) => ({
-      ...todo,
-      completed: true,
-    }));
-    setState((prevState) => ({ ...prevState, todos: updatedTodos }));
+  const handleToggleAllComplete = async () => {
+    try {
+      const updatedTodos: Todo[] = [];
+      for (const todo of state.todos) {
+        if (!todo.completed) {
+          const response = await axios.post(`${apiUrl}/tasks/${todo.id}/complete`);
+          updatedTodos.push(response.data);
+        } else {
+          updatedTodos.push(todo);
+        }
+      }
+      setState((prevState) => ({ ...prevState, todos: updatedTodos }));
+    } catch (error) {
+      console.error('Error toggling all todos complete:', error);
+    }
   };
-
+  
   const handleDeleteCompleted = () => {
     setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => !todo.completed) }));
   };
