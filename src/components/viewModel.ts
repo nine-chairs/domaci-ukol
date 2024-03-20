@@ -36,7 +36,6 @@ const useViewModel = () => {
     }
   };
 
-
   const handleInputChange = (inputText: string) => {
     setState((prevState) => ({ ...prevState, inputText }));
   };
@@ -47,12 +46,17 @@ const useViewModel = () => {
       try {
         const response = await axios.post(`${apiUrl}/tasks`, { text: newTodoText });
         const newTodo: Todo = response.data;
-        setState((prevState) => ({ ...prevState, todos: [...prevState.todos, newTodo], inputText: '' }));
+        setState((prevState) => ({ 
+          ...prevState, 
+          todos: [newTodo, ...prevState.todos],  // Prepend the new todo
+          inputText: '' 
+        }));
       } catch (error) {
         console.error('Error adding todo:', error);
       }
     }
   };
+  
 
   const handleEditTodo = async (id: string, newText: string) => {
     try {
