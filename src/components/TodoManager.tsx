@@ -29,13 +29,16 @@ const TodoManager: React.FC = () => {
     <div className='todoAppWrapper'>
       <h1>todo list</h1>
       <div className='inputFieldContainer'>
-        <input
-          className='inputField'
-          type="text"
-          placeholder="Enter a todo"
-          value={viewModel.state.inputText}
-          onChange={(e) => viewModel.handleInputChange(e.target.value)}
-        />
+        <div className='inputFieldContainerLeft'>
+          <input
+            className='inputField'
+            type="text"
+            placeholder="Enter a todo"
+            value={viewModel.state.inputText}
+            onChange={(e) => viewModel.handleInputChange(e.target.value)}
+          />
+        </div>
+
         <button className='addTodoButton' onClick={viewModel.handleAddTodo}>
           <img className='addIcon' src={add} alt={'add a new todo'} />
         </button>

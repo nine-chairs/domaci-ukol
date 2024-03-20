@@ -20,6 +20,14 @@
   margin-bottom: 20px;
 }
 
+.inputFieldContainerLeft {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: orange;
+  width: 220px;
+}
+
 .inputField {
   background-color: rgb(233, 233, 233);
   border-radius: 30px;
