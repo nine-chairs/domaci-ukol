@@ -1,4 +1,4 @@
-.toDoAppWrapper {
+.todoAppWrapper {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -28,7 +28,7 @@
   width: 220px;
  }
 
- .addToDoButton {
+ .addTodoButton {
   border-radius: 30px;
   border: none;
   height: 36px;
@@ -50,7 +50,7 @@
 
  }
 
- .toDoFilter {
+ .todoFilter {
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;

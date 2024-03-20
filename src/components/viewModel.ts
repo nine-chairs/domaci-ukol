@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 interface Todo {
@@ -24,16 +23,16 @@ const useViewModel = () => {
   const apiUrl = 'http://localhost:8080';
 
   useEffect(() => {
-    fetchTasks();
+    fetchTodos();
   }, []);
 
-  const fetchTasks = async () => {
+  const fetchTodos = async () => {
     try {
       const response = await axios.get(`${apiUrl}/tasks`);
       const fetchedTodos: Todo[] = response.data;
       setState((prevState) => ({ ...prevState, todos: fetchedTodos }));
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error('Error fetching todos:', error);
     }
   };
 
@@ -46,7 +45,7 @@ const useViewModel = () => {
     if (state.inputText.trim() !== '') {
       const newTodoText = state.inputText;
       try {
-        const response = await axios.post(`${apiUrl}/tasks`, {  text: newTodoText });
+        const response = await axios.post(`${apiUrl}/tasks`, { text: newTodoText });
         const newTodo: Todo = response.data;
         setState((prevState) => ({ ...prevState, todos: [...prevState.todos, newTodo], inputText: '' }));
       } catch (error) {
@@ -80,21 +79,39 @@ const useViewModel = () => {
   };
 
   const handleToggleComplete = async (id: string) => {
+    const todoToToggle = state.todos.find(todo => todo.id === id);
+    if (!todoToToggle) {
+      console.error('Todo not found');
+      return;
+    }
+  
     try {
-      const response = await axios.post(`${apiUrl}/tasks/${id}/complete`);
-      const updatedTodo: Todo = response.data;
-      setState((prevState) => ({
-        ...prevState,
-        todos: prevState.todos.map((todo) =>
-          todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
-        ),
-      }));
+      if (todoToToggle.completed) {
+        const response = await axios.post(`${apiUrl}/tasks/${id}/incomplete`);
+        const updatedTodo: Todo = response.data;
+        setState(prevState => ({
+          ...prevState,
+          todos: prevState.todos.map(todo =>
+            todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
+          )
+        }));
+      } else {
+        const response = await axios.post(`${apiUrl}/tasks/${id}/complete`);
+        const updatedTodo: Todo = response.data;
+        setState(prevState => ({
+          ...prevState,
+          todos: prevState.todos.map(todo =>
+            todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
+          )
+        }));
+      }
     } catch (error) {
       console.error('Error toggling complete status:', error);
     }
   };
+  
 
-  const handleMarkAllComplete = () => {
+  const handleToggleAllComplete = () => {
     const updatedTodos = state.todos.map((todo) => ({
       ...todo,
       completed: true,
@@ -106,7 +123,7 @@ const useViewModel = () => {
     setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => !todo.completed) }));
   };
 
-  const countCompletedTasks = () => {
+  const countCompletedTodos = () => {
     return state.todos.filter((todo) => todo.completed).length;
   };
 
@@ -131,9 +148,9 @@ const useViewModel = () => {
     handleEditTodo,
     handleDeleteTodo,
     handleToggleComplete,
-    handleMarkAllComplete,
+    handleToggleAllComplete,
     handleDeleteCompleted,
-    countCompletedTasks,
+    countCompletedTodos,
     filteredTodos,
     handleFilterChange,
   };
