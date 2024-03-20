@@ -127,10 +127,23 @@ const useViewModel = () => {
     }
   };
   
-  const handleDeleteCompleted = () => {
-    setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => !todo.completed) }));
+  const handleDeleteCompleted = async () => {
+    try {
+      const completedTodos = state.todos.filter((todo) => todo.completed);
+      await Promise.all(
+        completedTodos.map(async (todo) => {
+          await axios.delete(`${apiUrl}/tasks/${todo.id}`);
+        })
+      );
+      setState((prevState) => ({
+        ...prevState,
+        todos: prevState.todos.filter((todo) => !todo.completed),
+      }));
+    } catch (error) {
+      console.error('Error deleting completed todos:', error);
+    }
   };
-
+  
   const countCompletedTodos = () => {
     return state.todos.filter((todo) => todo.completed).length;
   };
