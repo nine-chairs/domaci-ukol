@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useViewModel from './viewModel';
 import './TodoManager.css';
 import add from '../icons/add.svg';
@@ -6,6 +6,24 @@ import remove from '../icons/remove.svg';
 
 const TodoManager: React.FC = () => {
   const viewModel = useViewModel();
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const [editedText, setEditedText] = useState<string>('');
+
+  const handleEdit = (todoId: string, currentText: string) => {
+    setEditingTaskId(todoId);
+    setEditedText(currentText);
+  };
+
+  const handleSave = (todoId: string) => {
+    viewModel.handleEditTodo(todoId, editedText);
+    setEditingTaskId(null);
+    setEditedText('');
+  };
+
+  const handleCancel = () => {
+    setEditingTaskId(null);
+    setEditedText('');
+  };
 
   return (
     <div className='todoAppWrapper'>
@@ -54,15 +72,23 @@ const TodoManager: React.FC = () => {
               checked={todo.completed}
               onChange={() => viewModel.handleToggleComplete(todo.id)}
             />
-            {todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}
+            {editingTaskId === todo.id ? (
+              <>
+                <input
+                  type="text"
+                  value={editedText}
+                  onChange={(e) => setEditedText(e.target.value)}
+                />
+                <button onClick={() => handleSave(todo.id)}>Save</button>
+                <button onClick={handleCancel}>Cancel</button>
+              </>
+            ) : (
+              <>
+                {todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}
+                <button onClick={() => handleEdit(todo.id, todo.text)}>Edit</button>
+              </>
+            )}
             <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>Delete</button>
-            <button
-              onClick={() =>
-                viewModel.handleEditTodo(todo.id, prompt('Edit todo:', todo.text) || '')
-              }
-            >
-              Edit
-            </button>
           </li>
         ))}
       </ul>
