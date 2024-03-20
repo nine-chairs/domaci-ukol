@@ -86,9 +86,11 @@ const TodoManager: React.FC = () => {
               <>
                 {todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}
                 <button onClick={() => handleEdit(todo.id, todo.text)}>Edit</button>
+                {!editingTaskId && (
+                  <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>Delete</button>
+                )}
               </>
             )}
-            <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>Delete</button>
           </li>
         ))}
       </ul>
