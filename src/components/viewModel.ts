@@ -21,7 +21,7 @@ const useViewModel = () => {
   });
 
   const handleInputChange = (inputText: string) => {
-    setState({ ...state, inputText });
+    setState((prevState) => ({ ...prevState, inputText }));
   };
 
   const handleAddTodo = () => {
@@ -31,53 +31,53 @@ const useViewModel = () => {
         text: state.inputText,
         completed: false,
       };
-      setState({ ...state, todos: [...state.todos, newTodo], inputText: '' });
+      setState((prevState) => ({ ...prevState, todos: [...prevState.todos, newTodo], inputText: '' }));
     }
   };
 
   const handleDeleteTodo = (id: string) => {
-    setState({ ...state, todos: state.todos.filter(todo => todo.id !== id) });
+    setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => todo.id !== id) }));
   };
 
   const handleToggleComplete = (id: string) => {
-    setState({
-      ...state,
-      todos: state.todos.map(todo =>
+    setState((prevState) => ({
+      ...prevState,
+      todos: prevState.todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       ),
-    });
+    }));
   };
 
   const handleEditTodo = (id: string, newText: string) => {
-    setState({
-      ...state,
-      todos: state.todos.map(todo =>
+    setState((prevState) => ({
+      ...prevState,
+      todos: prevState.todos.map((todo) =>
         todo.id === id ? { ...todo, text: newText } : todo
       ),
-    });
+    }));
   };
 
   const handleFilterChange = (filterOption: string) => {
-    setState({ ...state, filterOption });
+    setState((prevState) => ({ ...prevState, filterOption }));
   };
 
   const handleMarkAllComplete = () => {
-    const updatedTodos = state.todos.map(todo => ({
+    const updatedTodos = state.todos.map((todo) => ({
       ...todo,
       completed: true,
     }));
-    setState({ ...state, todos: updatedTodos });
+    setState((prevState) => ({ ...prevState, todos: updatedTodos }));
   };
 
   const handleDeleteCompleted = () => {
-    setState({ ...state, todos: state.todos.filter(todo => !todo.completed) });
+    setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => !todo.completed) }));
   };
 
   const countCompletedTasks = () => {
-    return state.todos.filter(todo => todo.completed).length;
+    return state.todos.filter((todo) => todo.completed).length;
   };
 
-  const filteredTodos = state.todos.filter(todo => {
+  const filteredTodos = state.todos.filter((todo) => {
     if (state.filterOption === 'all') {
       return true;
     } else if (state.filterOption === 'completed') {
@@ -102,4 +102,4 @@ const useViewModel = () => {
   };
 };
 
-export default useViewModel
+export default useViewModel;
