@@ -3,6 +3,9 @@ import useViewModel from './viewModel';
 import './TodoManager.css';
 import add from '../icons/add.svg';
 import remove from '../icons/remove.svg';
+import edit from '../icons/edit.svg';
+import done from '../icons/done.svg';
+import close from '../icons/close.svg';
 
 const TodoManager: React.FC = () => {
   const viewModel = useViewModel();
@@ -82,15 +85,23 @@ const TodoManager: React.FC = () => {
                   value={editedText}
                   onChange={(e) => setEditedText(e.target.value)}
                 />
-                <button onClick={() => handleSave(todo.id)}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <button onClick={() => handleSave(todo.id)}>
+                  <img className='saveIcon' src={done} alt={'save edited todo'} />
+                </button>
+                <button onClick={handleCancel}>
+                  <img className='cancelIcon' src={close} alt={'cancel editing todo'} />
+                </button>
               </>
             ) : (
               <>
                 {todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}
-                <button onClick={() => handleEdit(todo.id, todo.text)}>Edit</button>
+                <button onClick={() => handleEdit(todo.id, todo.text)}>
+                  <img className='editIcon' src={edit} alt={'edit todo'} />
+                </button>
                 {!editingTaskId && (
-                  <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>Delete</button>
+                  <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>
+                    <img className='deleteIconSmall' src={remove} alt={'delete todo'} />
+                  </button>
                 )}
               </>
             )}

@@ -75,3 +75,30 @@
   border: none;
   height: 36px;
  }
+
+ .addIcon {
+ 
+
+ }
+
+ .deleteIconBig {
+  
+ }
+
+ .deleteIconSmall {
+  width: 15px;
+ }
+
+ .editIcon {
+  width: 15px;
+ }
+
+ .saveIcon {
+  width: 15px;
+ }
+
+ .cancelIcon {
+  width: 15px;
+ }
+
+ 
