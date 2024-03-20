@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 interface Todo {
   id: string;
@@ -20,45 +21,77 @@ const useViewModel = () => {
     filterOption: 'all',
   });
 
+  const apiUrl = 'http://localhost:8080';
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/tasks`);
+      const fetchedTodos: Todo[] = response.data;
+      setState((prevState) => ({ ...prevState, todos: fetchedTodos }));
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+
+
   const handleInputChange = (inputText: string) => {
     setState((prevState) => ({ ...prevState, inputText }));
   };
 
-  const handleAddTodo = () => {
+  const handleAddTodo = async () => {
     if (state.inputText.trim() !== '') {
-      const newTodo: Todo = {
-        id: uuidv4(),
-        text: state.inputText,
-        completed: false,
-      };
-      setState((prevState) => ({ ...prevState, todos: [...prevState.todos, newTodo], inputText: '' }));
+      const newTodoText = state.inputText;
+      try {
+        const response = await axios.post(`${apiUrl}/tasks`, {  text: newTodoText });
+        const newTodo: Todo = response.data;
+        setState((prevState) => ({ ...prevState, todos: [...prevState.todos, newTodo], inputText: '' }));
+      } catch (error) {
+        console.error('Error adding todo:', error);
+      }
     }
   };
 
-  const handleDeleteTodo = (id: string) => {
-    setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => todo.id !== id) }));
+  const handleEditTodo = async (id: string, newText: string) => {
+    try {
+      const response = await axios.post(`${apiUrl}/tasks/${id}`, { text: newText });
+      const updatedTodo: Todo = response.data;
+      setState((prevState) => ({
+        ...prevState,
+        todos: prevState.todos.map((todo) =>
+          todo.id === id ? { ...todo, text: updatedTodo.text } : todo
+        ),
+      }));
+    } catch (error) {
+      console.error('Error editing todo:', error);
+    }
   };
 
-  const handleToggleComplete = (id: string) => {
-    setState((prevState) => ({
-      ...prevState,
-      todos: prevState.todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      ),
-    }));
+  const handleDeleteTodo = async (id: string) => {
+    try {
+      await axios.delete(`${apiUrl}/tasks/${id}`);
+      setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => todo.id !== id) }));
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+    }
   };
 
-  const handleEditTodo = (id: string, newText: string) => {
-    setState((prevState) => ({
-      ...prevState,
-      todos: prevState.todos.map((todo) =>
-        todo.id === id ? { ...todo, text: newText } : todo
-      ),
-    }));
-  };
-
-  const handleFilterChange = (filterOption: string) => {
-    setState((prevState) => ({ ...prevState, filterOption }));
+  const handleToggleComplete = async (id: string) => {
+    try {
+      const response = await axios.post(`${apiUrl}/tasks/${id}/complete`);
+      const updatedTodo: Todo = response.data;
+      setState((prevState) => ({
+        ...prevState,
+        todos: prevState.todos.map((todo) =>
+          todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
+        ),
+      }));
+    } catch (error) {
+      console.error('Error toggling complete status:', error);
+    }
   };
 
   const handleMarkAllComplete = () => {
@@ -87,18 +120,22 @@ const useViewModel = () => {
     }
   });
 
+  const handleFilterChange = (filterOption: string) => {
+    setState((prevState) => ({ ...prevState, filterOption }));
+  };
+
   return {
     state,
     handleInputChange,
     handleAddTodo,
+    handleEditTodo,
     handleDeleteTodo,
     handleToggleComplete,
-    handleEditTodo,
-    handleFilterChange,
     handleMarkAllComplete,
     handleDeleteCompleted,
     countCompletedTasks,
     filteredTodos,
+    handleFilterChange,
   };
 };
 
