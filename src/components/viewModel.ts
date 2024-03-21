@@ -13,6 +13,7 @@ interface State {
   filterOption: string;
   editingTaskId: string | null;
   editedText: string;
+  error: string | null;
 }
 
 const useViewModel = () => {
@@ -22,6 +23,7 @@ const useViewModel = () => {
     filterOption: 'all',
     editingTaskId: null,
     editedText: '',
+    error: null,
   });
 
   const apiUrl = 'http://localhost:8080';
@@ -34,9 +36,11 @@ const useViewModel = () => {
     try {
       const response = await axios.get(`${apiUrl}/tasks`);
       const fetchedTodos: Todo[] = response.data;
-      setState((prevState) => ({ ...prevState, todos: fetchedTodos }));
+      setState((prevState) => ({ ...prevState, todos: fetchedTodos, error: null }));
     } catch (error) {
-      console.error('Error fetching todos:', error);
+      const errorMessage = 'Cannot load your todos. Please try again.';
+      console.error(errorMessage);
+      setState((prevState) => ({ ...prevState, error: errorMessage }));
     }
   };
 
@@ -53,35 +57,43 @@ const useViewModel = () => {
         setState((prevState) => ({ 
           ...prevState, 
           todos: [newTodo, ...prevState.todos], 
-          inputText: '' 
+          inputText: '',
+          error: null 
         }));
       } catch (error) {
-        console.error('Error adding todo:', error);
+        const errorMessage = 'Cannot add your todo. Please try again.';
+        console.error(errorMessage);
+        setState((prevState) => ({ ...prevState, error: errorMessage }));
       }
     }
   };
   
   const handleEditTodo = async (id: string, newText: string) => {
     try {
-      const response = await axios.post(`${apiUrl}/tasks/${id}`, { text: newText });
+      const response = await axios.post(`${apiUrl}/task/${id}`, { text: newText });
       const updatedTodo: Todo = response.data;
       setState((prevState) => ({
         ...prevState,
         todos: prevState.todos.map((todo) =>
           todo.id === id ? { ...todo, text: updatedTodo.text } : todo
         ),
+        error: null,
       }));
     } catch (error) {
-      console.error('Error editing todo:', error);
+      const errorMessage = 'Cannot edit your todo. Please try again.';
+      console.error(errorMessage);
+      setState((prevState) => ({ ...prevState, error: errorMessage }));
     }
   };
 
   const handleDeleteTodo = async (id: string) => {
     try {
       await axios.delete(`${apiUrl}/tasks/${id}`);
-      setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => todo.id !== id) }));
+      setState((prevState) => ({ ...prevState, todos: prevState.todos.filter((todo) => todo.id !== id), error: null }));
     } catch (error) {
-      console.error('Error deleting todo:', error);
+      const errorMessage = 'Cannot delete your todo. Please try again.';
+      console.error(errorMessage);
+      setState((prevState) => ({ ...prevState, error: errorMessage }));
     }
   };
 
@@ -100,7 +112,8 @@ const useViewModel = () => {
           ...prevState,
           todos: prevState.todos.map(todo =>
             todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
-          )
+          ),
+          error: null,
         }));
       } else {
         const response = await axios.post(`${apiUrl}/tasks/${id}/complete`);
@@ -109,11 +122,14 @@ const useViewModel = () => {
           ...prevState,
           todos: prevState.todos.map(todo =>
             todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
-          )
+          ),
+          error: null,
         }));
       }
     } catch (error) {
-      console.error('Error toggling complete status:', error);
+      const errorMessage = 'Cannot tick your todo. Please try again.';
+      console.error(errorMessage);
+      setState((prevState) => ({ ...prevState, error: errorMessage }));
     }
   };
   
@@ -128,9 +144,11 @@ const useViewModel = () => {
           updatedTodos.push(todo);
         }
       }
-      setState((prevState) => ({ ...prevState, todos: updatedTodos }));
+      setState((prevState) => ({ ...prevState, todos: updatedTodos, error: null }));
     } catch (error) {
-      console.error('Error toggling all todos complete:', error);
+      const errorMessage = 'Cannot tick all your todos. Please try again.';
+      console.error(errorMessage);
+      setState((prevState) => ({ ...prevState, error: errorMessage }));
     }
   };
   
@@ -145,9 +163,12 @@ const useViewModel = () => {
       setState((prevState) => ({
         ...prevState,
         todos: prevState.todos.filter((todo) => !todo.completed),
+        error: null,
       }));
     } catch (error) {
-      console.error('Error deleting completed todos:', error);
+      const errorMessage = 'Cannot delete your completed todos. Please try again.';
+      console.error(errorMessage);
+      setState((prevState) => ({ ...prevState, error: errorMessage }));
     }
   };
   

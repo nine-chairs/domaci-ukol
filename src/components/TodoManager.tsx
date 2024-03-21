@@ -1,3 +1,4 @@
+import React from 'react';
 import useViewModel from './viewModel';
 import './TodoManager.css';
 import add from '../icons/add.svg';
@@ -10,8 +11,12 @@ const TodoManager: React.FC = () => {
   const viewModel = useViewModel();
 
   return (
+
     <div className='todoAppWrapper'>
       <h1>todo list</h1>
+      <div>
+        {viewModel.state.error && <div className="error">{viewModel.state.error}</div>}
+      </div>
       <div className='inputFieldContainer'>
         <div className='inputFieldContainerLeft'>
           <input
@@ -47,7 +52,6 @@ const TodoManager: React.FC = () => {
           <img className='deleteIcon' src={remove} alt={'remove all completed todos'} />
         </button>
       </div>
-
       <p>
         {viewModel.countCompletedTodos()} of {viewModel.state.todos.length} todos completed
       </p>
