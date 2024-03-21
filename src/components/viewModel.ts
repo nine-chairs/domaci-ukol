@@ -11,6 +11,8 @@ interface State {
   todos: Todo[];
   inputText: string;
   filterOption: string;
+  editingTaskId: string | null;
+  editedText: string;
 }
 
 const useViewModel = () => {
@@ -18,6 +20,8 @@ const useViewModel = () => {
     todos: [],
     inputText: '',
     filterOption: 'all',
+    editingTaskId: null,
+    editedText: '',
   });
 
   const apiUrl = 'http://localhost:8080';
@@ -48,7 +52,7 @@ const useViewModel = () => {
         const newTodo: Todo = response.data;
         setState((prevState) => ({ 
           ...prevState, 
-          todos: [newTodo, ...prevState.todos],  // Prepend the new todo
+          todos: [newTodo, ...prevState.todos], 
           inputText: '' 
         }));
       } catch (error) {
@@ -57,7 +61,6 @@ const useViewModel = () => {
     }
   };
   
-
   const handleEditTodo = async (id: string, newText: string) => {
     try {
       const response = await axios.post(`${apiUrl}/tasks/${id}`, { text: newText });
@@ -166,6 +169,23 @@ const useViewModel = () => {
     setState((prevState) => ({ ...prevState, filterOption }));
   };
 
+  const handleInlineEditInputChange = (editedText: string) => {
+    setState((prevState) => ({ ...prevState, editedText }));
+  };
+
+  const handleInlineEdit = (todoId: string, currentText: string) => {
+    setState((prevState) => ({ ...prevState, editingTaskId: todoId, editedText: currentText  }));
+  };
+
+  const handleInlineSave = (todoId: string) => {
+    handleEditTodo(todoId, state.editedText);
+    setState((prevState) => ({ ...prevState, editingTaskId: null, editedText: ''  }));
+  };
+
+  const handleInlineCancel = () => {
+    setState((prevState) => ({ ...prevState, editingTaskId: null, editedText: ''  }));
+  };
+
   return {
     state,
     handleInputChange,
@@ -178,6 +198,10 @@ const useViewModel = () => {
     countCompletedTodos,
     filteredTodos,
     handleFilterChange,
+    handleInlineEditInputChange,
+    handleInlineEdit,
+    handleInlineSave,
+    handleInlineCancel
   };
 };
 
