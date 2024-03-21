@@ -14,7 +14,7 @@ const TodoManager: React.FC = () => {
 
     <div className='todoAppWrapper'>
       <h1>todo list</h1>
-      <div>
+      <div className='errorMessageContainer'>
         {viewModel.state.error && <div className="error">{viewModel.state.error}</div>}
       </div>
       <div className='inputFieldContainer'>
@@ -53,8 +53,17 @@ const TodoManager: React.FC = () => {
         </button>
       </div>
       <p>
-        {viewModel.countCompletedTodos()} of {viewModel.state.todos.length} todos completed
+        {viewModel.state.todos.length === 0 ? (
+          'You have nothing to do yet :)'
+        ) : (
+          <>
+            {viewModel.countCompletedTodos()} of {viewModel.state.todos.length}{' '}
+            {viewModel.state.todos.length === 1 ? 'todo' : 'todos'} completed
+          </>
+        )}
       </p>
+
+
       <ul>
         {viewModel.filteredTodos.map((todo) => (
           <li key={todo.id}>

@@ -70,7 +70,7 @@ const useViewModel = () => {
   
   const handleEditTodo = async (id: string, newText: string) => {
     try {
-      const response = await axios.post(`${apiUrl}/task/${id}`, { text: newText });
+      const response = await axios.post(`${apiUrl}/tasks/${id}`, { text: newText });
       const updatedTodo: Todo = response.data;
       setState((prevState) => ({
         ...prevState,
