@@ -14,9 +14,11 @@ const TodoManager: React.FC = () => {
 
     <div className='todoAppWrapper'>
       <h1>todo list</h1>
+
       <div className='errorMessageContainer'>
         {viewModel.state.error && <div className="error">{viewModel.state.error}</div>}
       </div>
+
       <div className='inputFieldContainer'>
         <div className='inputFieldContainerLeft'>
           <input
@@ -52,17 +54,25 @@ const TodoManager: React.FC = () => {
           <img className='deleteIcon' src={remove} alt={'remove all completed todos'} />
         </button>
       </div>
-      <p>
-        {viewModel.state.todos.length === 0 ? (
-          'You have nothing to do yet :)'
-        ) : (
+      <div>
+        {viewModel.state.loading &&
+          <div>
+            Loading your todos...
+            <div className="spinner"></div >
+          </div>}
+        {!viewModel.state.loading && (
           <>
-            {viewModel.countCompletedTodos()} of {viewModel.state.todos.length}{' '}
-            {viewModel.state.todos.length === 1 ? 'todo' : 'todos'} completed
+            {viewModel.state.todos.length === 0 ? (
+              'You have nothing to do yet :)'
+            ) : (
+              <>
+                {viewModel.countCompletedTodos()} of {viewModel.state.todos.length}{' '}
+                {viewModel.state.todos.length === 1 ? 'todo' : 'todos'} completed
+              </>
+            )}
           </>
         )}
-      </p>
-
+      </div>
 
       <ul>
         {viewModel.filteredTodos.map((todo) => (

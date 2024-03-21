@@ -14,6 +14,7 @@ interface State {
   editingTaskId: string | null;
   editedText: string;
   error: string | null;
+  loading: boolean; 
 }
 
 const useViewModel = () => {
@@ -24,6 +25,7 @@ const useViewModel = () => {
     editingTaskId: null,
     editedText: '',
     error: null,
+    loading: false,
   });
 
   const apiUrl = 'http://localhost:8080';
@@ -33,6 +35,7 @@ const useViewModel = () => {
   }, []);
 
   const fetchTodos = async () => {
+    setState((prevState) => ({ ...prevState, loading: true })); 
     try {
       const response = await axios.get(`${apiUrl}/tasks`);
       const fetchedTodos: Todo[] = response.data;
@@ -41,6 +44,8 @@ const useViewModel = () => {
       const errorMessage = 'Cannot load your todos. Please try again.';
       console.error(errorMessage);
       setState((prevState) => ({ ...prevState, error: errorMessage }));
+    } finally {
+      setState((prevState) => ({ ...prevState, loading: false }));
     }
   };
 
