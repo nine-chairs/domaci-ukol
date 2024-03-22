@@ -10,6 +10,7 @@
   padding-top: 30px;
   padding-left: 30px;
   padding-right: 30px;
+  width: 400px;
 }
 
 .inputFieldContainer {
@@ -76,9 +77,46 @@
   height: 36px;
  }
 
+ .todoItemList {
+  list-style-type: none;
+  background-color: aqua;
+  padding: 0;
+ }
+
+ .todoItem {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: pink;
+  width: 100%;
+ }
+
+ .todoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Add additional styles as needed */
+}
+
+.todoItemLeft {
+  display: flex;
+  align-items: center;
+}
+
+.todoItemRight {
+  display: flex;
+  align-items: center;
+}
+
+.todoItemRight button {
+  margin-left: 5px; /* Add spacing between buttons */
+}
+
+
+
+
  .addIcon {
  
-
  }
 
  .deleteIconBig {

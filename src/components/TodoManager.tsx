@@ -74,41 +74,48 @@ const TodoManager: React.FC = () => {
         )}
       </div>
 
-      <ul>
+      <ul className='todoItemList'>
         {viewModel.filteredTodos.map((todo) => (
-          <li key={todo.id}>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => viewModel.handleToggleComplete(todo.id)}
-            />
-            {viewModel.state.editingTaskId === todo.id ? (
-              <>
+          <li className='todoItem' key={todo.id}>
+            <div className="todoItemLeft">
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={() => viewModel.handleToggleComplete(todo.id)}
+              />
+              {viewModel.state.editingTaskId === todo.id ? (
                 <input
                   type="text"
-                  value={viewModel.state.editingTaskId === todo.id ? viewModel.state.editedText : todo.text}
+                  value={viewModel.state.editedText}
                   onChange={(e) => viewModel.handleInlineEditInputChange(e.target.value)}
                 />
-                <button onClick={() => viewModel.handleInlineSave(todo.id)}>
-                  <img className='saveIcon' src={done} alt={'save edited todo'} />
-                </button>
-                <button onClick={viewModel.handleInlineCancel}>
-                  <img className='cancelIcon' src={close} alt={'cancel editing todo'} />
-                </button>
-              </>
-            ) : (
-              <>
-                {todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}
-                <button onClick={() => viewModel.handleInlineEdit(todo.id, todo.text)}>
-                  <img className='editIcon' src={edit} alt={'edit todo'} />
-                </button>
-                {!viewModel.state.editingTaskId && (
-                  <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>
-                    <img className='deleteIconSmall' src={remove} alt={'delete todo'} />
+              ) : (
+                <span>{todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}</span>
+              )}
+            </div>
+            <div className="todoItemRight">
+              {viewModel.state.editingTaskId === todo.id ? (
+                <>
+                  <button onClick={() => viewModel.handleInlineSave(todo.id)}>
+                    <img className='saveIcon' src={done} alt={'save edited todo'} />
                   </button>
-                )}
-              </>
-            )}
+                  <button onClick={viewModel.handleInlineCancel}>
+                    <img className='cancelIcon' src={close} alt={'cancel editing todo'} />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => viewModel.handleInlineEdit(todo.id, todo.text)}>
+                    <img className='editIcon' src={edit} alt={'edit todo'} />
+                  </button>
+                  {viewModel.state.editingTaskId !== todo.id && (
+                    <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>
+                      <img className='deleteIconSmall' src={remove} alt={'delete todo'} />
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
           </li>
         ))}
       </ul>
