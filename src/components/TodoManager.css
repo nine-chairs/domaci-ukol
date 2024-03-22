@@ -37,11 +37,15 @@
   border: none;
   height: 36px;
   width: 350px;
+  padding-left: 20px;
  }
 
  .addTodoButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 30px;
-  border: none;
+  border: 1px solid black;
   height: 36px;
  }
 
@@ -65,18 +69,21 @@
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
+  width: 170px;
+  padding-left: 20px;
+  appearance: none; /* Hide the default arrow */
  }
 
  .allCompletedButton {
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
-  width: 200px;
+  width: 170px;
  }
 
  .deleteAllCompletedButton {
   border-radius: 30px;
-  border: none;
+  border: 1px solid black;
   height: 36px;
  }
 
@@ -116,7 +123,15 @@
   margin-left: 5px; /* Add spacing between buttons */
 }
 
-
+.inlineEditButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  height: 25px;
+  width: 25px;
+  border: none;
+}
 
 
  .addIcon {

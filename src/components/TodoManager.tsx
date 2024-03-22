@@ -99,20 +99,20 @@ const TodoManager: React.FC = () => {
             <div className="todoItemRight">
               {viewModel.state.editingTaskId === todo.id ? (
                 <>
-                  <button onClick={() => viewModel.handleInlineSave(todo.id)}>
+                  <button className='inlineEditButton' onClick={() => viewModel.handleInlineSave(todo.id)}>
                     <img className='saveIcon' src={done} alt={'save edited todo'} />
                   </button>
-                  <button onClick={viewModel.handleInlineCancel}>
+                  <button className='inlineEditButton' onClick={viewModel.handleInlineCancel}>
                     <img className='cancelIcon' src={close} alt={'cancel editing todo'} />
                   </button>
                 </>
               ) : (
                 <>
-                  <button onClick={() => viewModel.handleInlineEdit(todo.id, todo.text)}>
+                  <button className='inlineEditButton' onClick={() => viewModel.handleInlineEdit(todo.id, todo.text)}>
                     <img className='editIcon' src={edit} alt={'edit todo'} />
                   </button>
                   {viewModel.state.editingTaskId !== todo.id && (
-                    <button onClick={() => viewModel.handleDeleteTodo(todo.id)}>
+                    <button className='inlineEditButton' onClick={() => viewModel.handleDeleteTodo(todo.id)}>
                       <img className='deleteIconSmall' src={remove} alt={'delete todo'} />
                     </button>
                   )}
