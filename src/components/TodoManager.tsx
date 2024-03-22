@@ -45,7 +45,7 @@ const TodoManager: React.FC = () => {
             <option value="incomplete">Incomplete todos</option>
           </select>
           <button className='allCompletedButton' onClick={viewModel.handleToggleAllComplete}>
-            All Complete
+            Completed all todos
           </button>
         </div>
         <button className='deleteAllCompletedButton' onClick={viewModel.handleDeleteCompleted}>
@@ -57,7 +57,9 @@ const TodoManager: React.FC = () => {
         {viewModel.state.loading &&
           <>
             Loading your todos...
-            <div className="spinner"></div >
+            <div className='spinnerContainer'>
+              <div className="spinner"></div >
+            </div>
           </>}
         {!viewModel.state.loading && !viewModel.state.error && (
           <>
