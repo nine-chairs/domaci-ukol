@@ -108,7 +108,6 @@ const useViewModel = () => {
       console.error('Todo not found');
       return;
     }
-  
     try {
       if (todoToToggle.completed) {
         const response = await axios.post(`${apiUrl}/tasks/${id}/incomplete`);

@@ -53,7 +53,7 @@ const TodoManager: React.FC = () => {
         </button>
       </div>
       <div className='statusContainer'>
-        {viewModel.state.error && <div className="error">{viewModel.state.error}</div>}
+        {viewModel.state.error && <div className="errorMessage">{viewModel.state.error}</div>}
         {viewModel.state.loading &&
           <>
             Loading your todos...
