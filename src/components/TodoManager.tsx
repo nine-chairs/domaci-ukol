@@ -15,9 +15,7 @@ const TodoManager: React.FC = () => {
     <div className='todoAppWrapper'>
       <h1>todo list</h1>
 
-      <div className='errorMessageContainer'>
-        {viewModel.state.error && <div className="error">{viewModel.state.error}</div>}
-      </div>
+
 
       <div className='inputFieldContainer'>
         <div className='inputFieldContainerLeft'>
@@ -54,12 +52,13 @@ const TodoManager: React.FC = () => {
           <img className='deleteIcon' src={remove} alt={'remove all completed todos'} />
         </button>
       </div>
-      <div>
+      <div className='statusContainer'>
+        {viewModel.state.error && <div className="error">{viewModel.state.error}</div>}
         {viewModel.state.loading &&
-          <div>
+          <>
             Loading your todos...
             <div className="spinner"></div >
-          </div>}
+          </>}
         {!viewModel.state.loading && (
           <>
             {viewModel.state.todos.length === 0 ? (
