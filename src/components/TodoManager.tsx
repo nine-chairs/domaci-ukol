@@ -59,7 +59,7 @@ const TodoManager: React.FC = () => {
             Loading your todos...
             <div className="spinner"></div >
           </>}
-        {!viewModel.state.loading && (
+        {!viewModel.state.loading && !viewModel.state.error && (
           <>
             {viewModel.state.todos.length === 0 ? (
               'You have nothing to do yet :)'
@@ -72,6 +72,8 @@ const TodoManager: React.FC = () => {
           </>
         )}
       </div>
+
+
 
       <ul className='todoItemList'>
         {viewModel.filteredTodos.map((todo) => (
