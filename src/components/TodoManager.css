@@ -11,9 +11,8 @@
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 20px;
-
-  width: 500px;
   min-height: 300px;
+  width: 500px;
 }
 
 .inputFieldContainer {
@@ -32,7 +31,7 @@
   flex-grow: 1;
 }
 
- .inputField {
+.inputField {
   background-color: rgb(233, 233, 233);
   border-radius: 30px;
   border: none;
@@ -41,7 +40,7 @@
   padding-left: 20px;
 }
 
- .addRemoveTodoButtonBig {
+.addRemoveTodoButtonBig {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,16 +48,16 @@
   border: 1px solid black;
   height: 36px;
   width: 36px;
- }
+}
 
- .optionsContainer {
+.optionsContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: aqua;
- }
+}
 
- .optionsContainerLeft {
+.optionsContainerLeft {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,38 +65,36 @@
   background-color: orange;
 }
 
- .todoFilter {
+.todoFilter {
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
   width: 50%;
   padding-left: 20px;
   appearance: none; /* Hide the default arrow */
- }
+}
 
- .allCompletedButton {
+.allCompletedButton {
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
   width: 50%;
- }
+}
 
- .statusContainer {
+.statusContainer {
   margin-top: 20px;
   margin-bottom: 20px;
-  /* background-color: yellow; */
- }
+}
 
- .todoItemList {
+.todoItemList {
   list-style-type: none;
   padding: 0;
- }
+}
 
- .todoItem {
+.todoItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: pink; */
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -128,13 +125,13 @@
   border: none;
 }
 
- .addRemoveIconBig {
+.addRemoveIconBig {
   width: 24px;
- }
+}
 
- .inlineEditIconSmall {
+.inlineEditIconSmall {
   width: 16px;
- }
+}
 
 .spinnerContainer {
   display: flex;
@@ -143,7 +140,7 @@
   margin-top: 20px; /* Adjust margin as needed */
 }
 
- .spinner {
+.spinner {
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-left-color: black;
   border-radius: 50%;
@@ -165,4 +162,31 @@
   }
 }
 
- 
+
+/* Media query for tablets */
+@media (max-width: 768px) {
+  .todoAppWrapper {
+    width: 400px;
+  }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 480px) {
+  .todoAppWrapper {
+    width: 200px;
+  }
+
+  .inputField {
+    padding-left: 10px;
+  }
+
+  .todoFilter {
+    padding-left: 10px;
+    width: 80%;
+  }
+
+  .allCompletedButton {
+    width: 36px;
+  }
+}
+
