@@ -172,7 +172,6 @@
   }
 }
 
-
 /* Media query for tablets */
 @media (max-width: 768px) {
   .todoAppWrapper {
@@ -185,16 +184,13 @@
   .todoAppWrapper {
     width: 250px;
   }
-
   .inputField {
     padding-left: 10px;
   }
-
   .todoFilter {
     padding-left: 10px;
     width: 80%;
   }
-
   .allCompletedButton {
     width: 36px;
   }

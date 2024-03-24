@@ -1,15 +1,15 @@
-import React from 'react';
-import useViewModel from './viewModel';
-import './TodoManager.css';
-import add from '../icons/add.svg';
-import remove from '../icons/remove.svg';
-import edit from '../icons/edit.svg';
-import done from '../icons/done.svg';
-import done_all from '../icons/done_all.svg';
-import close from '../icons/close.svg';
+import React from 'react'
+import useViewModel from './viewModel'
+import './TodoManager.css'
+import add from '../icons/add.svg'
+import remove from '../icons/remove.svg'
+import edit from '../icons/edit.svg'
+import done from '../icons/done.svg'
+import done_all from '../icons/done_all.svg'
+import close from '../icons/close.svg'
 
 const TodoManager: React.FC = () => {
-  const viewModel = useViewModel();
+  const viewModel = useViewModel()
 
   return (
 
@@ -124,7 +124,7 @@ const TodoManager: React.FC = () => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default TodoManager;
+export default TodoManager
