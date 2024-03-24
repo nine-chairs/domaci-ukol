@@ -13,7 +13,7 @@ const TodoManager: React.FC = () => {
 
   return (
     <div className='todoAppWrapper'>
-      <h1>todo list</h1>
+      <div className='titleContainer'>todo list</div>
       <div className='inputFieldContainer'>
         <div className='inputFieldContainerLeft'>
           <input
