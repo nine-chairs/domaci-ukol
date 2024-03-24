@@ -12,12 +12,8 @@ const TodoManager: React.FC = () => {
   const viewModel = useViewModel()
 
   return (
-
     <div className='todoAppWrapper'>
       <h1>todo list</h1>
-
-
-
       <div className='inputFieldContainer'>
         <div className='inputFieldContainerLeft'>
           <input
@@ -28,12 +24,10 @@ const TodoManager: React.FC = () => {
             onChange={(e) => viewModel.handleInputChange(e.target.value)}
           />
         </div>
-
-        <button className='addRemoveTodoButtonBig' onClick={viewModel.handleAddTodo}>
-          <img className='addRemoveIconBig' src={add} alt={'add a new todo'} />
+        <button className='addRemoveButtonBig' onClick={viewModel.handleAddTodo}>
+          <img className='buttonIconBig' src={add} alt={'add a new todo'} />
         </button>
       </div>
-
       <div className='optionsContainer'>
         <div className='optionsContainerLeft'>
           <select
@@ -46,11 +40,11 @@ const TodoManager: React.FC = () => {
             <option value="incomplete">Incomplete todos</option>
           </select>
           <button className='allCompletedButton' onClick={viewModel.handleToggleAllComplete}>
-            <img className='addRemoveIconBig' src={done_all} alt={'completed all todos'} />
+            <img className='buttonIconBig' src={done_all} alt={'completed all todos'} />
           </button>
         </div>
-        <button className='addRemoveTodoButtonBig' onClick={viewModel.handleDeleteCompleted}>
-          <img className='addRemoveIconBig' src={remove} alt={'remove all completed todos'} />
+        <button className='addRemoveButtonBig' onClick={viewModel.handleDeleteCompleted}>
+          <img className='buttonIconBig' src={remove} alt={'remove all completed todos'} />
         </button>
       </div>
       <div className='statusContainer'>
@@ -75,9 +69,6 @@ const TodoManager: React.FC = () => {
           </>
         )}
       </div>
-
-
-
       <ul className='todoItemList'>
         {viewModel.filteredTodos.map((todo) => (
           <li className='todoItem' key={todo.id}>
