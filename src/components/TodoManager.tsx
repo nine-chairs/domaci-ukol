@@ -83,6 +83,7 @@ const TodoManager: React.FC = () => {
                   type="text"
                   value={viewModel.state.editedText}
                   onChange={(e) => viewModel.handleInlineEditInputChange(e.target.value)}
+                  className={viewModel.state.editingTaskId === todo.id ? 'inlineEditInputField' : ''}
                 />
               ) : (
                 <span>{todo.completed ? <del>{todo.text}</del> : <span>{todo.text}</span>}</span>
