@@ -28,8 +28,8 @@ const TodoManager: React.FC = () => {
           />
         </div>
 
-        <button className='addTodoButton' onClick={viewModel.handleAddTodo}>
-          <img className='addIcon' src={add} alt={'add a new todo'} />
+        <button className='addRemoveTodoButtonBig' onClick={viewModel.handleAddTodo}>
+          <img className='addRemoveIconBig' src={add} alt={'add a new todo'} />
         </button>
       </div>
 
@@ -48,8 +48,8 @@ const TodoManager: React.FC = () => {
             Completed all todos
           </button>
         </div>
-        <button className='deleteAllCompletedButton' onClick={viewModel.handleDeleteCompleted}>
-          <img className='deleteIcon' src={remove} alt={'remove all completed todos'} />
+        <button className='addRemoveTodoButtonBig' onClick={viewModel.handleDeleteCompleted}>
+          <img className='addRemoveIconBig' src={remove} alt={'remove all completed todos'} />
         </button>
       </div>
       <div className='statusContainer'>
@@ -100,20 +100,20 @@ const TodoManager: React.FC = () => {
               {viewModel.state.editingTaskId === todo.id ? (
                 <>
                   <button className='inlineEditButton' onClick={() => viewModel.handleInlineSave(todo.id)}>
-                    <img className='saveIcon' src={done} alt={'save edited todo'} />
+                    <img className='inlineEditIconSmall' src={done} alt={'save edited todo'} />
                   </button>
                   <button className='inlineEditButton' onClick={viewModel.handleInlineCancel}>
-                    <img className='cancelIcon' src={close} alt={'cancel editing todo'} />
+                    <img className='inlineEditIconSmall' src={close} alt={'cancel editing todo'} />
                   </button>
                 </>
               ) : (
                 <>
                   <button className='inlineEditButton' onClick={() => viewModel.handleInlineEdit(todo.id, todo.text)}>
-                    <img className='editIcon' src={edit} alt={'edit todo'} />
+                    <img className='inlineEditIconSmall' src={edit} alt={'edit todo'} />
                   </button>
                   {viewModel.state.editingTaskId !== todo.id && (
                     <button className='inlineEditButton' onClick={() => viewModel.handleDeleteTodo(todo.id)}>
-                      <img className='deleteIconSmall' src={remove} alt={'delete todo'} />
+                      <img className='inlineEditIconSmall' src={remove} alt={'delete todo'} />
                     </button>
                   )}
                 </>

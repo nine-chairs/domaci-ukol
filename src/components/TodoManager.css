@@ -11,7 +11,8 @@
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 20px;
-  width: 400px;
+
+  width: 500px;
   min-height: 300px;
 }
 
@@ -19,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: pink; */
+  background-color: pink;
   margin-bottom: 20px;
 }
 
@@ -27,49 +28,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: orange; */
-  width: 350px;
+  background-color: orange;
+  flex-grow: 1;
 }
 
-.inputField {
+ .inputField {
   background-color: rgb(233, 233, 233);
   border-radius: 30px;
   border: none;
   height: 36px;
-  width: 350px;
+  width: 100%;
   padding-left: 20px;
- }
+}
 
- .addTodoButton {
+ .addRemoveTodoButtonBig {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
+  width: 36px;
  }
 
  .optionsContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: aqua; */
+  background-color: aqua;
  }
 
  .optionsContainerLeft {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: orange; */
-  width: 350px;
-
- }
+  flex-grow: 1; /* Distribute remaining space equally */
+  background-color: orange;
+}
 
  .todoFilter {
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
-  width: 170px;
+  width: 50%;
   padding-left: 20px;
   appearance: none; /* Hide the default arrow */
  }
@@ -78,13 +79,7 @@
   border-radius: 30px;
   border: 1px solid black;
   height: 36px;
-  width: 170px;
- }
-
- .deleteAllCompletedButton {
-  border-radius: 30px;
-  border: 1px solid black;
-  height: 36px;
+  width: 50%;
  }
 
  .statusContainer {
@@ -128,34 +123,17 @@
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  height: 25px;
-  width: 25px;
+  height: 24px;
+  width: 24px;
   border: none;
 }
 
-
- .addIcon {
- 
+ .addRemoveIconBig {
+  width: 24px;
  }
 
- .deleteIconBig {
-  
- }
-
- .deleteIconSmall {
-  width: 15px;
- }
-
- .editIcon {
-  width: 15px;
- }
-
- .saveIcon {
-  width: 15px;
- }
-
- .cancelIcon {
-  width: 15px;
+ .inlineEditIconSmall {
+  width: 16px;
  }
 
 .spinnerContainer {
