@@ -5,6 +5,7 @@ import add from '../icons/add.svg';
 import remove from '../icons/remove.svg';
 import edit from '../icons/edit.svg';
 import done from '../icons/done.svg';
+import done_all from '../icons/done_all.svg';
 import close from '../icons/close.svg';
 
 const TodoManager: React.FC = () => {
@@ -45,7 +46,7 @@ const TodoManager: React.FC = () => {
             <option value="incomplete">Incomplete todos</option>
           </select>
           <button className='allCompletedButton' onClick={viewModel.handleToggleAllComplete}>
-            Completed all todos
+            <img className='addRemoveIconBig' src={done_all} alt={'completed all todos'} />
           </button>
         </div>
         <button className='addRemoveTodoButtonBig' onClick={viewModel.handleDeleteCompleted}>
